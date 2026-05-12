@@ -533,6 +533,8 @@ Klik **Code view** → paste:
 ## 8. Flow 2 — Create Fixed Asset
 
 **Tujuan:** Buat record Fixed Asset baru di D365 F&O.
+<img width="1252" height="670" alt="image" src="https://github.com/user-attachments/assets/74c5549c-25d2-47c4-892a-d38918b6d581" />
+
 
 ### Struktur Flow
 
