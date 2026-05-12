@@ -611,6 +611,8 @@ Klik **Code view** → paste:
 ---
 
 ## 9. Power Apps — Scanner WMS
+<img width="1910" height="867" alt="image" src="https://github.com/user-attachments/assets/f5a01f8e-b791-4fb4-b7d7-bb701b4dcad7" />
+
 
 ### Komponen Tree View
 
