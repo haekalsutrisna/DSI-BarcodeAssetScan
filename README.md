@@ -7,7 +7,7 @@
 > **Project:** BarcodeScanner Fixed Asset  
 > **Company:** PT. Dinamika Solusi Indonesia  
 > **Developer:** Muhammad Haekal Sutrisna  
-> **Environment:** CNMF — Contoso Entertainment China  
+> **Environment:** USMF — Contoso Entertainment USA  
 > **F&O Instance:** `dev-hseeb5e1653ceb6510devaos.axcloud.dynamics.com`  
 > **Tanggal:** 12 Mei 2026  
 
@@ -25,7 +25,7 @@
 8. [Flow 2 — Create Fixed Asset](#8-flow-2--create-fixed-asset)
 9. [Power Apps — Scanner WMS](#9-power-apps--scanner-wms)
 10. [QR Code Format & Data Testing](#10-qr-code-format--data-testing)
-11. [Data Fixed Asset CNMF](#11-data-fixed-asset-cnmf)
+11. [Data Fixed Asset USMF](#11-data-fixed-asset-usmf)
 12. [Troubleshooting](#12-troubleshooting)
 13. [Alur Logika Lengkap](#13-alur-logika-lengkap)
 
@@ -54,7 +54,7 @@
 ┌─────────────────────────────────────────────────────────┐
 │           Dynamics 365 Finance & Operations             │
 │           Entity: FixedAssetsV2                         │
-│           Company: CNMF                                 │
+│           Company: USMF                                 │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -81,7 +81,7 @@
 
 ### Informasi yang Diperlukan
 - **F&O URL:** `https://dev-hseeb5e1653ceb6510devaos.axcloud.dynamics.com`
-- **Legal Entity / Company:** `CNMF`
+- **Legal Entity / Company:** `USMF`
 - **Fixed Asset Groups:** `BLDG`, `COMP`, `EQUIP`
 - **Tenant ID:** dari Microsoft Entra ID
 
@@ -256,7 +256,7 @@ System Administration → Users → Users
 
 | Company Code | Company Name | Akses |
 |-------------|-------------|-------|
-| `CNMF` | Contoso Entertainment China | ✅ |
+| `USMF` | Contoso Entertainment China | ✅ |
 | `USMF` | Contoso Entertainment US | ✅ |
 | `DAT` | Default Data | ✅ |
 
@@ -278,15 +278,15 @@ Ini akan menampilkan semua Legal Entity yang bisa diakses oleh akun yang sedang 
 
 #### Flow 1 — Filter Expression:
 ```
-concat('FixedAssetNumber eq ''', triggerBody()?['text'], ''' and dataAreaId eq ''cnmf''')
+concat('FixedAssetNumber eq ''', triggerBody()?['text'], ''' and dataAreaId eq ''usmf''')
 ```
 
 #### Flow 2 — Create record field Company:
 ```
-cnmf
+usmf
 ```
 
-> ✅ Ganti `cnmf` dengan company code sesuai akses user kamu jika berbeda.
+> ✅ Ganti `usmf` dengan company code sesuai akses user kamu jika berbeda.
 
 ---
 
@@ -310,7 +310,7 @@ concat('FixedAssetNumber eq ''', triggerBody()?['text'], ''' and dataAreaId eq '
 ```powerfx
 Set(
     varAsset,
-    Flow1BarcodeAssetsScan.Run(locAssetId, "cnmf")
+    Flow1BarcodeAssetsScan.Run(locAssetId, "usmf")
 );
 ```
 
@@ -353,7 +353,7 @@ Tambah **1 input:**
 
 **$filter Expression** — masukkan via tab Expression:
 ```
-concat('FixedAssetNumber eq ''', triggerBody()?['text'], ''' and dataAreaId eq ''cnmf''')
+concat('FixedAssetNumber eq ''', triggerBody()?['text'], ''' and dataAreaId eq ''usmf''')
 ```
 
 ### Action 2 — Condition
@@ -566,7 +566,7 @@ Tambah **3 inputs:**
 | Entity name | `FixedAssetsV2` |
 | Fixed asset number | **KOSONGKAN** — auto-generate via Number Sequence |
 | Fixed asset group | `COMP` (hardcode sesuai grup default) |
-| Company | `cnmf` |
+| Company | `usmf` |
 | Name | `⚡ AssetName` dari trigger |
 | Location | `⚡ NewLocation` dari trigger |
 
@@ -888,9 +888,9 @@ CN-B000001|普通建筑物|Lantai 1 Gedung Utama
 
 ---
 
-## 11. Data Fixed Asset CNMF
+## 11. Data Fixed Asset USMF
 
-### Data Existing di D365 F&O (Company: CNMF)
+### Data Existing di D365 F&O (Company: USMF)
 
 | Fixed Asset Number | Name | Fixed Asset Group | Type | Location |
 |-------------------|------|------------------|------|----------|
@@ -902,7 +902,7 @@ CN-B000001|普通建筑物|Lantai 1 Gedung Utama
 | CN-C000004 | 37寸M120电视机 | COMP | Tangible | *(kosong)* |
 | CN-E000000001 | 52寸X590高清电视机 | EQUIP | Tangible | *(kosong)* |
 
-### Fixed Asset Groups CNMF
+### Fixed Asset Groups USMF
 
 | Kode | Name | Number Sequence |
 |------|------|----------------|
@@ -925,7 +925,7 @@ meskipun asset terlihat ada di F&O.
 **Fix:**
 1. Buka D365 F&O → `System Administration → Users → Users`
 2. Klik user yang dipakai koneksi Power Automate
-3. Cek section **Legal entities** — pastikan company code (`cnmf`, `usmf`, dll.) terdaftar di sana
+3. Cek section **Legal entities** — pastikan company code (`USMF`, `usmf`, dll.) terdaftar di sana
 4. Gunakan hanya company code yang ada di list tersebut di filter Flow 1
 
 ---
@@ -952,7 +952,7 @@ provide keys for dataAreaId, FixedAssetNumber.
 **Penyebab:** Menggunakan action **"Get a record"** yang memerlukan composite key.  
 **Fix:** Ganti ke **"Lists items present in table"** dengan filter:
 ```
-concat('FixedAssetNumber eq ''', triggerBody()?['text'], ''' and dataAreaId eq ''cnmf''')
+concat('FixedAssetNumber eq ''', triggerBody()?['text'], ''' and dataAreaId eq ''usmf''')
 ```
 
 ---
@@ -1137,9 +1137,9 @@ Tambahkan label sementara untuk debug:
 
 | Aksi | Method | URL |
 |------|--------|-----|
-| List Fixed Assets | GET | `/data/FixedAssetsV2?$filter=FixedAssetNumber eq 'CN-C000001' and dataAreaId eq 'cnmf'&$top=1` |
+| List Fixed Assets | GET | `/data/FixedAssetsV2?$filter=FixedAssetNumber eq 'CN-C000001' and dataAreaId eq 'usmf'&$top=1` |
 | Create Fixed Asset | POST | `/data/FixedAssetsV2` |
-| Update Fixed Asset | PATCH | `/data/FixedAssetsV2(dataAreaId='cnmf',FixedAssetNumber='CN-C000001')` |
+| Update Fixed Asset | PATCH | `/data/FixedAssetsV2(dataAreaId='usmf',FixedAssetNumber='CN-C000001')` |
 
 ### Power Apps Keyboard Shortcuts
 
