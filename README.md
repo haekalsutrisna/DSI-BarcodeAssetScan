@@ -319,6 +319,8 @@ Set(
 ## 7. Flow 1 — Validate / Get Fixed Asset
 
 **Tujuan:** Cek apakah Fixed Asset sudah ada di D365 F&O berdasarkan AssetId dari QR code.
+<img width="1183" height="721" alt="image" src="https://github.com/user-attachments/assets/fb669c67-5c81-4be6-9f0e-6450a5ff47e3" />
+
 
 ### Struktur Flow
 
